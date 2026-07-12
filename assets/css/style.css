@@ -1,0 +1,1215 @@
+:root {
+            --sidebar-width: 260px;
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --bg-color: #f8f9fa;
+            --text-dark: #2b2d42;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.35), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.25), transparent 30%),
+        linear-gradient(135deg, #06142b, #0a2540, #0f3b68);
+
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+
+    min-height: 100vh;
+    color: white;
+}
+
+/* Animasi background */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+        /* --- Sidebar Styling --- */
+        #wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        #sidebar {
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(20px);
+
+    border-right: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+
+    color: #fff;
+    transition: all 0.3s;
+    min-height: 100vh;
+    position: fixed;
+    z-index: 999;
+}
+
+        #sidebar.active {
+            margin-left: calc(var(--sidebar-width) * -1);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+        }
+
+        .sidebar-brand {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile{
+    padding:20px;
+    text-align:center;
+    border-bottom:1px solid #334155;
+}
+
+        .user-avatar{
+    width:60px;
+    height:60px;
+    background:var(--primary-color);
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    margin-bottom:10px;
+    color:white;
+}
+    
+
+        ul.components {
+            padding: 20px 0;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul.components li {
+            padding: 0;
+        }
+
+        ul.components li a {
+            padding: 15px 25px;
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.95rem;
+            border-left: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        ul.components li a:hover,
+ul.components li a.active {
+    color: #fff;
+    background: linear-gradient(90deg, rgba(67,97,238,0.3), transparent);
+    border-left: 4px solid #60a5fa;
+    transform: translateX(8px);
+}
+ul.components li a {
+    transition: all 0.35s ease;
+}
+        ul.components li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Submenu Label */
+     /* Hapus salah satu duplikat .sidebar-label - cukup satu definisi ini saja */
+.sidebar-label {
+    padding: 10px 25px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+/* FIX: sidebar bisa di-scroll sendiri kalau menu terlalu panjang */
+#sidebar {
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    color: #fff;
+    transition: all 0.3s;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+/* Scrollbar sidebar tipis biar tetap estetik */
+#sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+#sidebar::-webkit-scrollbar-thumb {
+    background: rgba(96, 165, 250, 0.3);
+    border-radius: 10px;
+}
+
+/* FIX: Overlay gelap di belakang sidebar saat mobile (klik untuk menutup) */
+#sidebarOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998; /* di bawah sidebar (999), di atas konten */
+    backdrop-filter: blur(2px);
+}
+
+@media (max-width: 768px) {
+    #sidebarOverlay.show {
+        display: block;
+    }
+}
+
+/* Opsional: sembunyikan tombol hamburger di desktop, hanya tampil mobile */
+@media (min-width: 992px) {
+    .navbar-toggle {
+        display: none;
+    }
+}
+
+.text-muted {
+    color: #cbd5e1 !important;
+}
+
+        /* --- Content Styling --- */
+        #content{
+    width: calc(100% - 260px);
+    margin-left: 260px;
+    padding: 25px;
+    transition: 0.3s;
+    
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(12px);
+    
+    min-height: 100vh;
+}
+        #content.active {
+            margin-left: 0;
+        }
+
+        /* Navbar Mobile Toggle */
+        .navbar-toggle {
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+
+    color: white;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    padding: 10px 15px;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 0 15px rgba(59,130,246,0.35),
+        0 4px 15px rgba(0,0,0,0.3);
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    display: inline-block;
+}
+.navbar-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 25px rgba(96,165,250,0.5),
+        0 8px 20px rgba(0,0,0,0.35);
+}
+
+        /* Cards */
+        .stat-card {
+    border: 1px solid rgba(96,165,250,0.25);
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(20px);
+
+    background: rgba(255,255,255,0.05);
+
+    box-shadow:
+        0 0 25px rgba(59,130,246,0.15),
+        0 10px 30px rgba(0,0,0,0.35);
+
+    transition: all 0.4s ease;
+
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+.row.g-4{
+    align-items:stretch;
+}
+
+        .stat-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+        0 0 25px rgba(96,165,250,0.4),
+        0 10px 40px rgba(0,0,0,0.4);
+}
+.stat-card {
+    animation: fadeUp 0.8s ease;
+}
+.glass-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+        .stat-card .card-body {
+            z-index: 2;
+            position: relative;
+        }
+
+        .stat-icon-bg {
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            font-size: 5rem;
+            opacity: 0.15;
+            z-index: 1;
+            transform: rotate(-15deg);
+        }
+
+        /* Gradients */
+        .bg-gradient-suhu {
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    color: white;
+}
+
+.bg-gradient-aktivitas {
+    background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    color: white;
+}
+
+.bg-gradient-lokasi {
+    background: linear-gradient(135deg, #1d4ed8, #60a5fa);
+    color: white;
+}
+
+.bg-gradient-online {
+    background: linear-gradient(135deg, #66BB6A, #43A047);
+}
+
+.bg-gradient-offline {
+    background: linear-gradient(135deg, #c5b0b0, #78909C);
+}
+
+        .value-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        /* Map Section */
+        .map-container {
+    border-radius: 18px;
+    overflow: hidden;
+
+    background: rgba(15, 23, 42, 0.7);
+
+    border: 1px solid rgba(96,165,250,0.15);
+
+    box-shadow:
+        0 0 20px rgba(59,130,246,0.15),
+        0 10px 30px rgba(0,0,0,0.3);
+
+    padding: 5px;
+}
+        
+        iframe {
+    border-radius: 12px;
+    width: 100%;
+    height: 400px;
+    border: none;
+
+    filter:
+        brightness(0.8)
+        contrast(1.2)
+        saturate(0.8)
+        hue-rotate(180deg)
+        invert(0.92);
+}
+
+/* Gradient tambahan untuk card Koordinat GPS - senada dengan tone biru */
+.bg-gradient-koordinat {
+    background: linear-gradient(135deg, #0f172a, #1e40af);
+    color: white;
+}
+
+.value-text-sm {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e0f2fe;
+}
+
+/* Dropdown "Pilih Sapi" - senada dengan tema glass biru gelap */
+.form-label {
+    color: #cbd5e1;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+#cowSelect {
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: 1px solid rgba(96, 165, 250, 0.35);
+    border-radius: 14px;
+    padding: 0.7rem 1.1rem;
+    font-weight: 500;
+    box-shadow:
+        0 0 15px rgba(59, 130, 246, 0.1),
+        0 4px 15px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2360a5fa' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#cowSelect:hover {
+    border-color: rgba(96, 165, 250, 0.6);
+}
+
+#cowSelect:focus {
+    background-color: rgba(15, 23, 42, 0.75);
+    color: #ffffff;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25);
+    outline: none;
+}
+
+#cowSelect option {
+    background-color: #0f172a;
+    color: #ffffff;
+}
+
+        /* Scroll margin untuk anchor link supaya tidak mepet atas */
+        .feature-section {
+            scroll-margin-top: 20px;
+        }
+        ul.components li a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+ul.components li a:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+        /* Responsive */
+@media (max-width: 768px) {
+
+    #sidebar { 
+        margin-left: calc(var(--sidebar-width) * -1);
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 0 30px rgba(0,0,0,0.3); 
+    }
+
+    #sidebar.active { 
+        margin-left: 0; 
+    }
+
+    #content { 
+        margin-left: 0; 
+    }
+
+    #content.active{
+        margin-left: 260px;
+    }
+
+    .navbar-toggle { 
+        display: block; 
+    }
+}
+
+ /* ============================= */
+/* Page Header */
+/* ============================= */
+.page-title {
+    color: #fff;
+    font-weight: 700;
+}
+.page-subtitle {
+    color: #94a3b8;
+}
+
+/* ============================= */
+/* Table Card (glass) */
+/* ============================= */
+.table-glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    border-radius: 22px;
+    box-shadow:
+        0 0 25px rgba(59, 130, 246, 0.12),
+        0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.table-dark-glass {
+    color: #e2e8f0;
+    margin-bottom: 0;
+}
+
+.table-dark-glass thead th {
+    color: #93c5fd;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.25);
+    background: transparent;
+    padding: 1rem 0.75rem;
+}
+
+.table-dark-glass tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.25s ease;
+}
+
+.table-dark-glass tbody tr:hover {
+    background: rgba(96, 165, 250, 0.08);
+}
+
+.table-dark-glass tbody td {
+    padding: 0.9rem 0.75rem;
+    vertical-align: middle;
+}
+
+/* ============================= */
+/* Buttons */
+/* ============================= */
+.btn-primary-glow {
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.55rem 1.3rem;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.35);
+    transition: all 0.3s ease;
+}
+.btn-primary-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.55);
+    color: #fff;
+}
+
+.btn-edit-glow {
+    background: rgba(251, 191, 36, 0.15);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    color: #fbbf24;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    transition: all 0.25s ease;
+}
+.btn-edit-glow:hover {
+    background: rgba(251, 191, 36, 0.25);
+    color: #fde68a;
+}
+
+.btn-delete-glow {
+    background: rgba(248, 113, 113, 0.15);
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    color: #f87171;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    transition: all 0.25s ease;
+}
+.btn-delete-glow:hover {
+    background: rgba(248, 113, 113, 0.25);
+    color: #fecaca;
+}
+
+/* ============================= */
+/* Modal (glass dark) */
+/* ============================= */
+.modal-content-glass {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    border-radius: 22px;
+    box-shadow:
+        0 0 25px rgba(59, 130, 246, 0.15),
+        0 10px 30px rgba(0, 0, 0, 0.45);
+    color: #e2e8f0;
+}
+
+.modal-content-glass .modal-header,
+.modal-content-glass .modal-footer {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.modal-content-glass .modal-title,
+.modal-content-glass h5 {
+    color: #fff;
+    font-weight: 700;
+}
+
+.modal-content-glass label {
+    color: #93c5fd;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+}
+
+.modal-content-glass .form-control,
+.modal-content-glass .form-select {
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    color: #fff;
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+}
+
+.modal-content-glass .form-control:focus,
+.modal-content-glass .form-select:focus {
+    background-color: rgba(15, 23, 42, 0.8);
+    border-color: #60a5fa;
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25);
+}
+
+.modal-content-glass .form-control::placeholder {
+    color: #64748b;
+}
+
+.modal-content-glass .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.modal-content-glass .btn-secondary {
+    background: rgba(148, 163, 184, 0.15);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    color: #cbd5e1;
+    border-radius: 10px;
+}
+.modal-content-glass .btn-secondary:hover {
+    background: rgba(148, 163, 184, 0.25);
+    color: #fff;
+}
+
+/* Badge Gender di tabel */
+.badge-gender-male {
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #93c5fd;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-gender-female {
+    background: rgba(236, 72, 153, 0.15);
+    border: 1px solid rgba(236, 72, 153, 0.4);
+    color: #f9a8d4;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-weight {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #7dd3fc;
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* ============================= */
+/* FIX: Toast tidak bisa diklik / menghalangi elemen lain */
+/* ============================= */
+.toast-glass {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 2000;
+    min-width: 280px;
+    max-width: 360px;
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transform: translateX(120%);
+    transition: transform 0.35s ease;
+    pointer-events: none; /* <-- FIX: tidak menghalangi klik saat tersembunyi */
+}
+
+.toast-glass.show {
+    transform: translateX(0);
+    pointer-events: auto; /* <-- aktif hanya saat toast tampil */
+}
+
+/* ============================= */
+/* FIX: Background tabel masih putih (override Bootstrap variable) */
+/* ============================= */
+.table-dark-glass {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+    --bs-table-hover-bg: rgba(96, 165, 250, 0.08);
+    --bs-table-hover-color: #fff;
+    --bs-table-color: #e2e8f0;
+    --bs-table-border-color: rgba(255, 255, 255, 0.08);
+    background-color: transparent !important;
+    color: #e2e8f0;
+    margin-bottom: 0;
+}
+
+.table-dark-glass thead th {
+    background-color: transparent !important;
+    color: #93c5fd;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.25);
+    padding: 1rem 0.75rem;
+}
+
+.table-dark-glass tbody tr {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.25s ease;
+}
+
+.table-dark-glass tbody tr:hover {
+    background-color: rgba(96, 165, 250, 0.08) !important;
+}
+
+.table-dark-glass tbody td {
+    background-color: transparent !important;
+    padding: 0.9rem 0.75rem;
+    vertical-align: middle;
+    color: #e2e8f0;
+}
+
+/* Pastikan card pembungkus tabel juga tidak punya bg putih dari Bootstrap */
+.table-glass-card,
+.table-glass-card .card-body {
+    background-color: transparent;
+}
+
+/* ============================= */
+/* Secret Input (Device Secret) */
+/* ============================= */
+.secret-input {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(96, 165, 250, 0.3) !important;
+    font-family: monospace;
+    letter-spacing: 1px;
+}
+
+.secret-input:focus {
+    background-color: rgba(15, 23, 42, 0.8) !important;
+    box-shadow: none;
+    border-color: #60a5fa !important;
+}
+
+.btn-secret-action {
+    background-color: rgba(96, 165, 250, 0.12);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    color: #93c5fd;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.25s ease;
+}
+
+.btn-secret-action:hover {
+    background-color: rgba(96, 165, 250, 0.22);
+    color: #fff;
+}
+
+/* ============================= */
+/* Form Select & Control - Umum (di luar modal) */
+/* ============================= */
+/* ============================= */
+/* Form Select & Control - Umum (di luar modal) */
+/* ============================= */
+.glass-card .form-select,
+.glass-card .form-control,
+.modal-content-glass .form-select,
+.modal-content-glass .form-control,
+.form-glass-select {
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    transition: all 0.3s ease;
+}
+
+/* Khusus <select>: matikan panah bawaan browser & Bootstrap, pakai 1 panah custom */
+.glass-card select.form-select,
+.modal-content-glass select.form-select,
+select.form-glass-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2360a5fa' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 16px;
+    padding-right: 2.75rem; /* beri ruang supaya teks tidak menabrak panah */
+}
+
+.glass-card .form-select:focus,
+.glass-card .form-control:focus,
+.modal-content-glass .form-select:focus,
+.modal-content-glass .form-control:focus,
+.form-glass-select:focus {
+    background-color: rgba(15, 23, 42, 0.8);
+    color: #fff;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25);
+    outline: none;
+}
+
+.glass-card .form-select option,
+.modal-content-glass .form-select option,
+.form-glass-select option {
+    background-color: #0f172a;
+    color: #fff;
+}
+
+.glass-card .form-label,
+.modal-content-glass label {
+    color: #93c5fd;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* ============================================================ */
+/* RESPONSIVE - Berlaku untuk semua halaman (Dashboard, Cow,    */
+/* Collar, Assignment, Suhu/Detail Collar, dll)                 */
+/* ============================================================ */
+
+/* ---------- Tablet & bawah (<= 991px) ---------- */
+@media (max-width: 991px) {
+
+    #content {
+        width: 100%;
+        margin-left: 0;
+        padding: 18px;
+    }
+
+    #sidebar {
+        margin-left: calc(var(--sidebar-width) * -1);
+    }
+
+    #sidebar.active {
+        margin-left: 0;
+    }
+
+    .navbar-toggle {
+        display: inline-block;
+    }
+
+    .value-text {
+        font-size: 2rem;
+    }
+
+    .stat-icon-bg {
+        font-size: 4rem;
+    }
+}
+
+/* ---------- Mobile besar (<= 768px) ---------- */
+@media (max-width: 768px) {
+
+    .page-title {
+        font-size: 1.35rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.85rem;
+    }
+
+    /* Header halaman (judul + tombol Add) jadi vertikal */
+    .d-flex.justify-content-between.align-items-center.mb-4 {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.75rem;
+    }
+
+    .d-flex.justify-content-between.align-items-center.mb-4 .btn-primary-glow {
+        width: 100%;
+    }
+
+    /* Stat card: paksa satu baris jadi bisa discroll horizontal di HP */
+    .row.flex-nowrap {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+
+    .row.flex-nowrap::-webkit-scrollbar {
+        height: 6px;
+    }
+    .row.flex-nowrap::-webkit-scrollbar-thumb {
+        background: rgba(96, 165, 250, 0.35);
+        border-radius: 10px;
+    }
+
+    .row.flex-nowrap > .col {
+        min-width: 220px;
+        flex: 0 0 auto;
+    }
+
+    .value-text {
+        font-size: 1.6rem;
+    }
+
+    .stat-icon-bg {
+        font-size: 3rem;
+    }
+
+    .stat-card .card-body {
+        padding: 1.1rem !important;
+    }
+
+    /* Tabel: bungkus scroll horizontal + perkecil padding */
+    .table-glass-card {
+        border-radius: 16px;
+    }
+
+    .table-glass-card .card-body {
+        padding: 1rem !important;
+    }
+
+    .table-dark-glass {
+        font-size: 0.85rem;
+    }
+
+    .table-dark-glass thead th,
+    .table-dark-glass tbody td {
+        padding: 0.6rem 0.5rem;
+        white-space: nowrap;
+    }
+
+    /* Tombol aksi Edit/Delete di tabel jadi bertumpuk rapi */
+    .btn-edit-glow,
+    .btn-delete-glow {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.78rem;
+        margin-bottom: 0.25rem;
+    }
+
+    /* Modal full-width & nempel dekat tepi layar */
+    .modal-dialog {
+        margin: 0.75rem;
+    }
+
+    .modal-content-glass {
+        border-radius: 16px;
+    }
+
+    /* Form assign (Cow <-> Collar) jadi vertikal penuh */
+    #assignForm .col-md-5,
+    #assignForm .col-md-2 {
+        width: 100%;
+    }
+
+    /* Secret input group jangan sampai kepotong */
+    .secret-input {
+        min-width: 90px;
+        font-size: 0.8rem;
+    }
+
+    .btn-secret-action {
+        padding: 0.35rem 0.5rem;
+    }
+
+    /* Toast supaya tidak kepotong di layar sempit */
+    .toast-glass {
+        left: 1rem;
+        right: 1rem;
+        max-width: none;
+        top: 1rem;
+    }
+}
+
+/* ---------- Mobile kecil (<= 480px) ---------- */
+@media (max-width: 480px) {
+
+    #content {
+        padding: 12px;
+    }
+
+    .value-text {
+        font-size: 1.4rem;
+    }
+
+    .stat-card h6 {
+        font-size: 0.75rem;
+    }
+
+    .badge-gender-male,
+    .badge-gender-female,
+    .badge-weight,
+    .badge-status-active,
+    .badge-status-inactive {
+        font-size: 0.72rem;
+        padding: 0.25rem 0.55rem;
+    }
+
+    .btn-primary-glow {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .modal-content-glass .modal-body {
+        padding: 1rem;
+    }
+
+    .modal-content-glass label {
+        font-size: 0.8rem;
+    }
+}
+
+/* ---------- Map & iframe tetap proporsional di HP ---------- */
+@media (max-width: 768px) {
+    iframe,
+    #map {
+        height: 280px !important;
+    }
+}
+
+.badge-movement-active {
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    color: #86efac;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.badge-movement-idle {
+    background: rgba(148, 163, 184, 0.15);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+/* Summary Cards kecil di atas tabel history */
+.summary-mini-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+}
+
+.summary-mini-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #93c5fd;
+    font-weight: 700;
+}
+
+.summary-mini-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 0.25rem;
+}
+
+.summary-mini-icon {
+    font-size: 1.4rem;
+    opacity: 0.6;
+}
+
+/* Quick date preset buttons */
+.btn-preset {
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    color: #93c5fd;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+}
+
+.btn-preset:hover,
+.btn-preset.active {
+    background: rgba(96, 165, 250, 0.25);
+    color: #fff;
+    border-color: #60a5fa;
+}
+
+/* Search box di atas tabel */
+.search-box-glass {
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    color: #fff;
+    border-radius: 12px;
+    padding: 0.55rem 0.9rem 0.55rem 2.4rem;
+}
+
+.search-box-glass:focus {
+    background-color: rgba(15, 23, 42, 0.8);
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25);
+    outline: none;
+    color: #fff;
+}
+
+.search-wrapper {
+    position: relative;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+}
+
+/* Chart container */
+.chart-container-glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 18px;
+    padding: 1.25rem;
+}
+
+/* Pagination */
+.pagination-glass .page-item .page-link {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    color: #93c5fd;
+    border-radius: 8px;
+    margin: 0 2px;
+}
+
+.pagination-glass .page-item.active .page-link {
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    border-color: transparent;
+    color: #fff;
+}
+
+.pagination-glass .page-item.disabled .page-link {
+    opacity: 0.4;
+}
+
+/* Loading spinner overlay tabel */
+.table-loading {
+    text-align: center;
+    padding: 2.5rem 0;
+    color: #93c5fd;
+}
+
+/* Badge Movement */
+.badge-movement-active {
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    color: #86efac;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.badge-movement-idle {
+    background: rgba(148, 163, 184, 0.15);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+/* Btn export */
+.btn-export-glow {
+    background: rgba(74, 222, 128, 0.12);
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    color: #86efac;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: all 0.25s ease;
+}
+.btn-export-glow:hover {
+    background: rgba(74, 222, 128, 0.22);
+    color: #d1fae5;
+}
