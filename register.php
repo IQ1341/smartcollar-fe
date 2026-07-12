@@ -1,5 +1,43 @@
+<?php
+
+require_once __DIR__ . "/config/app.php";
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
+
+<script>
+
+window.APP = {
+
+    apiUrl: "<?= API_URL ?>",
+
+    firebase: {
+
+        apiKey: "<?= FIREBASE_API_KEY ?>",
+
+        authDomain: "<?= FIREBASE_AUTH_DOMAIN ?>",
+
+        databaseURL: "<?= FIREBASE_DATABASE_URL ?>",
+
+        projectId: "<?= FIREBASE_PROJECT_ID ?>",
+
+        storageBucket: "<?= FIREBASE_STORAGE_BUCKET ?>",
+
+        messagingSenderId: "<?= FIREBASE_MESSAGING_SENDER_ID ?>",
+
+        appId: "<?= FIREBASE_APP_ID ?>"
+
+    }
+
+};
+
+console.log(window.APP);
+
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
