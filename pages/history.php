@@ -19,9 +19,16 @@ require_once "../includes/sidebar.php";
             <h3 class="page-title mb-1">Riwayat Monitoring</h3>
             <p class="page-subtitle mb-0">Lihat data monitoring per hari atau rentang tanggal.</p>
         </div>
-        <button id="exportCsvBtn" class="btn btn-export-glow">
-            <i class="fas fa-file-arrow-down me-1"></i> Export CSV
-        </button>
+        <div class="d-flex gap-2">
+            <button id="exportCsvBtn" class="btn btn-export-glow d-flex align-items-center">
+                <i class="fas fa-file-csv me-2"></i>
+                <span>Export CSV</span>
+            </button>
+            <button id="exportPdfBtn" class="btn btn-export-glow d-flex align-items-center">
+                <i class="fas fa-file-pdf me-2"></i>
+                <span>Export PDF</span>
+            </button>
+        </div>
     </div>
 
     <!-- ====================================================== -->
@@ -147,14 +154,20 @@ require_once "../includes/sidebar.php";
                         <tr>
                             <th>Waktu</th>
                             <th>Suhu</th>
-                            <th>Signal</th>
-                            <th>Movement</th>
+                            <th>Kode Sapi</th>
+                            <th>Nama Sapi</th>
+                            <th>Breed</th>
+                            <th>Gender</th>
+                            <th>Umur</th>
+                            <th>Berat</th>
+                            <th>Kondisi</th>
+                            <th>Aktivitas</th>
                             <th>Koordinat</th>
                         </tr>
                     </thead>
                     <tbody id="historyBody">
                         <tr>
-                            <td colspan="5" class="text-center text-muted py-4">
+                            <td colspan="11" class="text-center text-muted py-4">
                                 Pilih sapi dan tanggal lalu klik Muat
                             </td>
                         </tr>
@@ -178,6 +191,7 @@ const BASE_URL_HISTORY = "/ajax/history.php";
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="../assets/js/history.js"></script>
 
 <?php
