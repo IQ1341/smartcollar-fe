@@ -139,8 +139,27 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 
 <div class="mb-3">
+    <label class="form-label">Birth Date</label>
+    <input type="date" class="form-control" name="birthDate" value="${cow.birthDate ?? ""}">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Color</label>
+    <input type="text" class="form-control" name="color" value="${cow.color ?? ""}">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Status</label>
+    <select class="form-select" name="status">
+        <option value="healthy" ${cow.status == "healthy" ? "selected" : ""}>Healthy</option>
+        <option value="sick" ${cow.status == "sick" ? "selected" : ""}>Sick</option>
+        <option value="pregnant" ${cow.status == "pregnant" ? "selected" : ""}>Pregnant</option>
+    </select>
+</div>
+
+<div class="mb-3">
     <label class="form-label">Description</label>
-    <textarea class="form-control" name="description">${cow.description ?? ""}</textarea>
+    <textarea class="form-control" name="description">${cow.note ?? ""}</textarea>
 </div>
 
 `;
