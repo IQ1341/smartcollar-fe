@@ -52,7 +52,10 @@ require_once "../includes/sidebar.php";
                             <th>Name</th>
                             <th>Breed</th>
                             <th>Gender</th>
+                            <th>Age</th>
                             <th>Weight</th>
+                            <th>Color</th>
+                            <th>Status</th>
                             <th width="150">Action</th>
                         </tr>
                     </thead>
@@ -79,7 +82,28 @@ require_once "../includes/sidebar.php";
                                     </span>
                                 </td>
                                 <td>
+                                    <?php
+                                    $birthDate = $cow["birthDate"] ?? null;
+                                    if ($birthDate) {
+                                        $today = new DateTime();
+                                        $birth = new DateTime($birthDate);
+                                        $age = $today->diff($birth)->y;
+                                        echo "<span class=\"badge-age\">$age tahun</span>";
+                                    } else {
+                                        echo "<span class=\"badge-age\">-</span>";
+                                    }
+                                    ?>
+                                </td>
+                                <td>
                                     <span class="badge-weight"><?= htmlspecialchars($cow["weight"]) ?> kg</span>
+                                </td>
+                                <td>
+                                    <span class="badge-color"><?= htmlspecialchars($cow["color"] ?? "N/A") ?></span>
+                                </td>
+                                <td>
+                                    <span class="badge-status-<?= htmlspecialchars($cow["status"]) ?>">
+                                        <?= ucfirst(htmlspecialchars($cow["status"])) ?>
+                                    </span>
                                 </td>
                                 <td>
                                     <button class="btn btn-sm btn-edit-glow editBtn" data-id="<?= $cow["id"] ?>">
@@ -147,6 +171,11 @@ require_once "../includes/sidebar.php";
                     <input type="number" name="weight" class="form-control">
                 </div>
 
+                <div class="mb-3">
+                    <label>Birth Date</label>
+                    <input type="date" name="birthDate" class="form-control">
+                </div>
+
                 <div>
                     <label>Description</label>
                     <textarea name="description" class="form-control"></textarea>
@@ -154,7 +183,6 @@ require_once "../includes/sidebar.php";
 
                 <!-- Hidden fields to satisfy backend schema -->
                 <input type="hidden" name="status" value="healthy">
-                <input type="hidden" name="birthDate" value="">
                 <input type="hidden" name="color" value="">
                 <input type="hidden" name="photoUrl" value="">
 
