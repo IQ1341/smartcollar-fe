@@ -151,12 +151,12 @@ PHP Dashboard
 |----------|--------|
 | Authentication | ✅ |
 | Dashboard | ✅ |
-| Cow Management | 🚧 |
-| Smart Collar | 🚧 |
-| Assignment | 🚧 |
-| Monitoring | 🚧 |
-| History | 🚧 |
-| WhatsApp Notification | ⏳ |
+| Cow Management | ✅ |
+| Smart Collar | ✅ |
+| Assignment | ✅ |
+| Monitoring | ✅|
+| History | ✅ |
+| WhatsApp Notification | ✅ |
 
 ---
 
@@ -172,4 +172,4 @@ Muhammad Iqbal
 
 Software Engineer
 
-PT Habibi Digital Nusantara
+DevGo
